@@ -1,15 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-
-const signInSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-});
+import { signInSchema } from '../schemas';
+import { useSignIn } from '../api/useSignin';
 
 type SignInFormValues = z.infer<typeof signInSchema>;
 
 export const useSignInCard = () => {
+  const { mutate } = useSignIn();
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -19,8 +17,7 @@ export const useSignInCard = () => {
   });
 
   const onSubmit = (data: SignInFormValues) => {
-    // Handle form submission
-    console.log(data);
+    mutate({ json: data });
   };
 
   return { form, onSubmit };
