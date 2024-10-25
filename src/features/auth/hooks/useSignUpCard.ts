@@ -1,29 +1,17 @@
-import { MAX_PASSWORD_LENGTH } from '@/constants';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-
-const signUpSchema = z
-  .object({
-    name: z.string().min(2, 'Name must be at least 2 characters'),
-    email: z.string().email('Invalid email address'),
-    password: z
-      .string()
-      .min(MAX_PASSWORD_LENGTH, `Password must be at least ${MAX_PASSWORD_LENGTH} characters`),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ['confirmPassword'],
-  });
+import { serverSubmissionSchema, signUpSchema } from '../schemas';
+import { useSignUp } from '../api/useSignup';
 
 type SignUpFormValues = z.infer<typeof signUpSchema>;
-
+export type ServerSubmissionValues = z.infer<typeof serverSubmissionSchema>;
 export const useSignUpCard = () => {
+  const signUpMutation = useSignUp();
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
-      name: '',
+      username: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -31,8 +19,12 @@ export const useSignUpCard = () => {
   });
 
   const onSubmit = (values: SignUpFormValues) => {
-    // Handle form submission
-    console.log(values);
+    const serverValues: ServerSubmissionValues = {
+      username: values.username,
+      email: values.email,
+      password: values.password,
+    };
+    signUpMutation.mutate({ json: serverValues });
   };
 
   return { form, onSubmit };
