@@ -1,18 +1,18 @@
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { signInSchema } from '../schemas';
-import { useSignIn } from '../api/useSignin';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { signInSchema } from "../schemas";
+import { useSignIn } from "../api/useSignin";
 
 type SignInFormValues = z.infer<typeof signInSchema>;
 
 export const useSignInCard = () => {
-  const { mutate } = useSignIn();
+  const { mutate, isPending } = useSignIn();
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
   });
 
@@ -20,5 +20,5 @@ export const useSignInCard = () => {
     mutate({ json: data });
   };
 
-  return { form, onSubmit };
+  return { form, onSubmit, isPending };
 };

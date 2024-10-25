@@ -1,5 +1,5 @@
-'use client';
-import { Button } from '@/components/ui/button';
+"use client";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,16 +7,22 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import { FcGoogle } from 'react-icons/fc';
-import { FaGithub } from 'react-icons/fa';
-import Link from 'next/link';
-import { UseFormReturn } from 'react-hook-form';
-import { Path } from 'react-hook-form';
-import { ReactNode } from 'react';
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
+import Link from "next/link";
+import { UseFormReturn } from "react-hook-form";
+import { Path } from "react-hook-form";
+import { ReactNode } from "react";
 
 type FormFieldValue = string | number | readonly string[] | undefined;
 
@@ -34,6 +40,7 @@ type AuthCardProps<T extends Record<string, FormFieldValue>> = {
   footerText: string;
   footerLinkText: string;
   footerLinkHref: string;
+  disabled?: boolean;
 };
 
 export const AuthCard = <T extends Record<string, FormFieldValue>>({
@@ -46,10 +53,11 @@ export const AuthCard = <T extends Record<string, FormFieldValue>>({
   footerText,
   footerLinkText,
   footerLinkHref,
+  disabled,
 }: AuthCardProps<T>) => {
   return (
-    <Card className="w-full h-full md:w-[487px] border-none shadow-none">
-      <CardHeader className="flex items-center justify-center text-center p-7">
+    <Card className="h-full w-full border-none shadow-none md:w-[487px]">
+      <CardHeader className="flex items-center justify-center p-7 text-center">
         <CardTitle className="text-2xl">{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
@@ -67,14 +75,19 @@ export const AuthCard = <T extends Record<string, FormFieldValue>>({
                 render={({ field: formField }) => (
                   <FormItem>
                     <FormControl>
-                      <Input {...formField} type={field.type} placeholder={field.placeholder} />
+                      <Input
+                        {...formField}
+                        type={field.type}
+                        placeholder={field.placeholder}
+                        disabled={disabled}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             ))}
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" disabled={disabled}>
               {submitButtonText}
             </Button>
           </form>
@@ -83,7 +96,7 @@ export const AuthCard = <T extends Record<string, FormFieldValue>>({
       <div className="px-7">
         <Separator />
       </div>
-      <CardContent className="p-7 flex flex-col gap-4">
+      <CardContent className="flex flex-col gap-4 p-7">
         <Button variant="secondary" className="w-full">
           <FcGoogle className="mr-2 size-5" />
           {submitButtonText} with Google
@@ -96,9 +109,9 @@ export const AuthCard = <T extends Record<string, FormFieldValue>>({
       <div className="px-7">
         <Separator />
       </div>
-      <CardFooter className="p-7 flex justify-center">
-        <p className="text-sm text-center">
-          {footerText}{' '}
+      <CardFooter className="flex justify-center p-7">
+        <p className="text-center text-sm">
+          {footerText}{" "}
           <Link className="text-blue-700" href={footerLinkHref}>
             {footerLinkText}
           </Link>

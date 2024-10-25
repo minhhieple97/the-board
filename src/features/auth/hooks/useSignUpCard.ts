@@ -1,20 +1,20 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-import { serverSubmissionSchema, signUpSchema } from '../schemas';
-import { useSignUp } from '../api/useSignup';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { serverSubmissionSchema, signUpSchema } from "../schemas";
+import { useSignUp } from "../api/useSignup";
 
 type SignUpFormValues = z.infer<typeof signUpSchema>;
 export type ServerSubmissionValues = z.infer<typeof serverSubmissionSchema>;
 export const useSignUpCard = () => {
-  const signUpMutation = useSignUp();
+  const { mutate, isPending } = useSignUp();
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
@@ -24,8 +24,8 @@ export const useSignUpCard = () => {
       email: values.email,
       password: values.password,
     };
-    signUpMutation.mutate({ json: serverValues });
+    mutate({ json: serverValues });
   };
 
-  return { form, onSubmit };
+  return { form, onSubmit, isPending };
 };

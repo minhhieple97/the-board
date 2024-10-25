@@ -1,24 +1,15 @@
-'use client';
-import { redirect } from 'next/navigation';
-import { useGetCurrentUser } from '@/features/auth/api/useGetCurrentUser';
-import { useLogout } from '@/features/auth/api/useLogout';
-import { Button } from '@/components/ui/button';
+import { getCurrentUser } from "@/features/auth/actions";
+import { UserButton } from "@/features/auth/components/UserButton";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  const { data: currentUser, isLoading, isSuccess } = useGetCurrentUser();
-  const { mutate: logout } = useLogout();
-  if (isLoading) {
-    return <div>Loading...</div>;
+export default async function Home() {
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect("/sign-in");
   }
-
-  if (!currentUser) {
-    redirect('/sign-in');
-  }
-
   return (
     <>
-      {isSuccess && <p>Hello, {currentUser.data.name}</p>}
-      <Button onClick={() => logout()}>Logout</Button>
+      <UserButton />
     </>
   );
 }
