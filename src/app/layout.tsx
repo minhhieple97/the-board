@@ -1,12 +1,12 @@
-import type { Metadata } from 'next';
-import './globals.css';
-import { Inter } from 'next/font/google';
-import QueryProvider from '@/components/query-provider';
-const inter = Inter({ subsets: ['latin'] });
+import type { Metadata } from "next";
+import "./globals.css";
+import { Inter } from "next/font/google";
+import QueryProvider from "@/components/QueryProvider";
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'The Board',
-  description: 'Be professional, be productive',
+  title: "The Board",
+  description: "Be professional, be productive",
 };
 
 export default function RootLayout({

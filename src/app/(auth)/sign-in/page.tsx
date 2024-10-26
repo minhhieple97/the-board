@@ -7,9 +7,5 @@ export default async function SignIn() {
   if (user) {
     redirect("/");
   }
-  return (
-    <div>
-      <SignInCard />
-    </div>
-  );
+  return <SignInCard />;
 }
