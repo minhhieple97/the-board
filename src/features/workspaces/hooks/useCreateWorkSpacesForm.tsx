@@ -10,10 +10,22 @@ export const useCreateWorkSpacesForm = () => {
     resolver: zodResolver(createWorkspacesSchema),
     defaultValues: {
       name: "",
+      image: undefined,
     },
   });
   const onSubmit = async (data: CreateWorkSpacesFormValues) => {
-    mutate({ json: data });
+    const finalData = {
+      ...data,
+      image: data.image instanceof File ? data.image : undefined,
+    };
+    mutate(
+      { form: finalData },
+      {
+        onSuccess: () => {
+          form.reset();
+        },
+      },
+    );
   };
 
   return { form, onSubmit, isPending };

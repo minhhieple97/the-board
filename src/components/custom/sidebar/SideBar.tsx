@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Separator } from "./ui/separator";
-import { Navigation } from "./Navigation";
+import { Separator } from "../../ui/separator";
+import { Navigation } from "../navigation/Navigation";
 
 export const SideBar = () => {
   return (

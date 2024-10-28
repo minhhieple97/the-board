@@ -1,9 +1,9 @@
 "use client";
 
 import { MenuIcon } from "lucide-react";
-import { Button } from "./ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
-import { SideBar } from "./SideBar";
+import { Button } from "../../ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "../../ui/sheet";
+import { SideBar } from "../sidebar";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 

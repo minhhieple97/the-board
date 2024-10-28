@@ -20,6 +20,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useCreateWorkSpacesForm } from "../hooks/useCreateWorkSpacesForm";
+import { ImageUpload } from "@/components/custom/image-upload/ImageUpload";
+
 type CreateWorkSpacesFormProps = {
   onCancel: () => void;
 };
@@ -28,8 +30,16 @@ export const CreateWorkSpacesForm = ({
 }: CreateWorkSpacesFormProps) => {
   const { form, onSubmit, isPending } = useCreateWorkSpacesForm();
 
+  const handleCancel = () => {
+    form.reset({
+      name: "",
+      image: undefined,
+    });
+    onCancel?.();
+  };
+
   return (
-    <Card className="mx-auto w-full max-w-md">
+    <Card className="mx-auto w-full">
       <CardHeader>
         <CardTitle>Create Workspace</CardTitle>
         <CardDescription>
@@ -38,7 +48,7 @@ export const CreateWorkSpacesForm = ({
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <CardContent>
+          <CardContent className="space-y-4">
             <FormField
               control={form.control}
               name="name"
@@ -55,9 +65,35 @@ export const CreateWorkSpacesForm = ({
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="image"
+              render={({ field: { value, onChange, ...field } }) => (
+                <FormItem>
+                  <FormLabel>Workspace Image</FormLabel>
+                  <FormControl>
+                    <ImageUpload
+                      value={value}
+                      onChange={onChange}
+                      {...field}
+                      disabled={isPending}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Upload an image for your workspace (optional)
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button type="button" variant="outline" onClick={onCancel}>
+            <Button
+              type="button"
+              variant="outline"
+              disabled={isPending}
+              onClick={handleCancel}
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={isPending}>

@@ -9,13 +9,27 @@ const app = new Hono()
   .post(
     "/",
     sessionMiddleware,
-    zValidator("json", createWorkspacesSchema),
+    zValidator("form", createWorkspacesSchema),
     async (c) => {
-      const { name } = c.req.valid("json");
+      const { name, image } = c.req.valid("form");
       const user = c.get("user");
+      const storage = c.get("storage");
       try {
         const databases = c.get("databases");
-
+        let uploadedImageUrl: string | undefined;
+        if (image instanceof File) {
+          const file = await storage.createFile(
+            config.appwrite.bucketId,
+            ID.unique(),
+            image,
+          );
+          const arrayBuffer = await storage.getFilePreview(
+            config.appwrite.bucketId,
+            file.$id,
+          );
+          const base64Image = Buffer.from(arrayBuffer).toString("base64");
+          uploadedImageUrl = `data:image/png;base64,${base64Image}`;
+        }
         const workspace = await databases.createDocument(
           config.appwrite.databaseId,
           config.appwrite.workspacesId,
@@ -23,6 +37,7 @@ const app = new Hono()
           {
             name,
             userId: user.$id,
+            imageUrl: uploadedImageUrl,
           },
         );
 

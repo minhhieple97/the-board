@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import QueryProvider from "@/components/QueryProvider";
+import QueryProvider from "@/components/custom/QueryProvider";
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "The Board",
