@@ -55,17 +55,16 @@ const app = new Hono()
       }
     },
   )
-  .get("/list", sessionMiddleware, async (c) => {
+  .get("/", sessionMiddleware, async (c) => {
     try {
       const databases = c.get("databases");
 
       const workspaces = await databases.listDocuments(
-        "main", // Replace with your actual database ID
-        "workspaces", // Replace with your actual collection ID
-        [],
+        config.appwrite.databaseId,
+        config.appwrite.workspacesId,
       );
 
-      return c.json({ success: true, data: workspaces.documents });
+      return c.json({ data: workspaces });
     } catch (error) {
       console.error("Error fetching workspaces:", error);
       return c.json(

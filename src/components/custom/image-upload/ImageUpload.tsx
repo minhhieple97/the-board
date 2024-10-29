@@ -30,7 +30,6 @@ export const ImageUpload = forwardRef<HTMLDivElement, ImageUploadProps>(
       disabled,
     });
 
-    // Use either prop error or upload error
     const displayError = propError || uploadError;
 
     return (
@@ -59,6 +58,7 @@ export const ImageUpload = forwardRef<HTMLDivElement, ImageUploadProps>(
                 size="sm"
                 className="absolute right-2 top-2"
                 onClick={handlers.handleRemove}
+                disabled={disabled}
               >
                 Remove
               </Button>
