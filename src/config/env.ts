@@ -8,6 +8,7 @@ const envSchema = z.object({
   NEXT_PUBLIC_APPWRITE_DATABASE_ID: z.string().min(1),
   NEXT_PUBLIC_APPWRITE_WORKSPACES_ID: z.string().min(1),
   NEXT_PUBLIC_APPWRITE_BUCKET_ID: z.string().min(1),
+  NEXT_PUBLIC_APPWRITE_MEMBERS_ID: z.string().min(1),
 });
 
 const processEnv: Record<keyof z.infer<typeof envSchema>, string | undefined> =
@@ -21,6 +22,8 @@ const processEnv: Record<keyof z.infer<typeof envSchema>, string | undefined> =
     NEXT_PUBLIC_APPWRITE_WORKSPACES_ID:
       process.env.NEXT_PUBLIC_APPWRITE_WORKSPACES_ID,
     NEXT_PUBLIC_APPWRITE_BUCKET_ID: process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID,
+    NEXT_PUBLIC_APPWRITE_MEMBERS_ID:
+      process.env.NEXT_PUBLIC_APPWRITE_MEMBERS_ID,
   };
 
 const env = envSchema.parse(processEnv);
@@ -33,6 +36,7 @@ export const config = {
     project: env.NEXT_PUBLIC_APPWRITE_PROJECT,
     databaseId: env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
     workspacesId: env.NEXT_PUBLIC_APPWRITE_WORKSPACES_ID,
+    membersId: env.NEXT_PUBLIC_APPWRITE_MEMBERS_ID,
     bucketId: env.NEXT_PUBLIC_APPWRITE_BUCKET_ID,
   },
 } as const;

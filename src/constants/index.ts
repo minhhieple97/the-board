@@ -8,3 +8,8 @@ export const QUERY_KEYS = {
 
 export const MAX_FILE_SIZE = 1024 * 1024; // 1MB
 export const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
+
+export const MEMBER_TYPES = {
+  USER: "user",
+  ADMIN: "admin",
+} as const;

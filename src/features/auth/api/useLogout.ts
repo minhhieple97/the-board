@@ -17,6 +17,7 @@ export const useLogout = () => {
     onSuccess: () => {
       router.refresh();
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.CURRENT_USER] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.WORKSPACES] });
     },
   });
   return mutation;

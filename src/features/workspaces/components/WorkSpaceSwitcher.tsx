@@ -20,20 +20,28 @@ export const WorkSpaceSwitcher = () => {
       </div>
       <Select>
         <SelectTrigger className="w-full bg-neutral-200 p-1 font-medium">
-          <SelectValue placeholder="No workspaces selected" />
-          <SelectContent>
-            {workspaces?.documents.map((workspace) => (
-              <SelectItem key={workspace.$id} value={workspace.$id}>
-                <div className="flex items-center justify-start gap-3 font-medium">
-                  <WorkSpaceAvatar
-                    image={workspace.imageUrl}
-                    name={workspace.name}
-                  />
-                  <span className="truncate text-sm">{workspace.name}</span>
-                </div>
-              </SelectItem>
-            ))}
-          </SelectContent>
+          <SelectValue
+            placeholder={
+              workspaces?.documents.length && workspaces.documents.length > 0
+                ? "Select a workspace"
+                : "No workspaces found"
+            }
+          />
+          {workspaces?.documents.length && workspaces.documents.length > 0 ? (
+            <SelectContent>
+              {workspaces?.documents.map((workspace) => (
+                <SelectItem key={workspace.$id} value={workspace.$id}>
+                  <div className="flex items-center justify-start gap-3 font-medium">
+                    <WorkSpaceAvatar
+                      image={workspace.imageUrl}
+                      name={workspace.name}
+                    />
+                    <span className="truncate text-sm">{workspace.name}</span>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          ) : null}
         </SelectTrigger>
       </Select>
     </div>

@@ -1,9 +1,10 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { createWorkspacesSchema } from "../schemas";
-import { ID, AppwriteException } from "node-appwrite";
+import { ID, AppwriteException, Query } from "node-appwrite";
 import { sessionMiddleware } from "@/lib/server/session-middleware";
 import { config } from "@/config/env";
+import { MEMBER_TYPES } from "@/constants";
 
 const app = new Hono()
   .post(
@@ -41,6 +42,17 @@ const app = new Hono()
           },
         );
 
+        await databases.createDocument(
+          config.appwrite.databaseId,
+          config.appwrite.membersId,
+          ID.unique(),
+          {
+            userId: user.$id,
+            workspaceId: workspace.$id,
+            role: MEMBER_TYPES.USER,
+          },
+        );
+
         return c.json({ success: true, data: workspace });
       } catch (error) {
         if (error instanceof AppwriteException) {
@@ -58,10 +70,22 @@ const app = new Hono()
   .get("/", sessionMiddleware, async (c) => {
     try {
       const databases = c.get("databases");
-
+      const user = c.get("user");
+      const members = await databases.listDocuments(
+        config.appwrite.databaseId,
+        config.appwrite.membersId,
+        [Query.equal("userId", user.$id)],
+      );
+      if (members.documents.length === 0) {
+        return c.json({ data: { documents: [] } });
+      }
+      const workspaceIds = members.documents.map(
+        (member) => member.workspaceId,
+      );
       const workspaces = await databases.listDocuments(
         config.appwrite.databaseId,
         config.appwrite.workspacesId,
+        [Query.orderDesc("$createdAt"), Query.contains("$id", workspaceIds)],
       );
 
       return c.json({ data: workspaces });
