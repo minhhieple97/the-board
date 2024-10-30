@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The Board - A Jira-like Project Management Tool
 
-## Getting Started
+A full-stack project management application built with Next.js 14, Hono.js, and Appwrite.
 
-First, run the development server:
+## Features
 
+- 🏢 Workspaces Management
+- 📊 Projects & Epics
+- ✅ Tasks & Kanban Boards
+- 📅 Calendar View
+- ✉️ Invite System
+- 🔒 Authentication (OAuth & Email)
+- 👥 Role-based Access Control
+- 🖼️ Image Upload Support
+- 📱 Responsive Design
+- 📈 Analytics Dashboard
+
+## Tech Stack
+
+- **Frontend**: Next.js 14, React, TypeScript
+- **Styling**: Tailwind CSS, Shadcn UI
+- **API**: Hono.js
+- **Backend**: Appwrite
+- **State Management**: TanStack Query
+- **Form Handling**: React Hook Form, Zod
+- **Authentication**: Appwrite Auth
+
+## Prerequisites
+
+- Node.js 18+ 
+- npm/yarn/pnpm
+- Appwrite Cloud Account or Self-hosted Instance
+
+## Local Development Setup
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/minhhieple97/the-board.git
+cd the-board
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Create an Appwrite project:
+   - Sign up for [Appwrite Cloud](https://cloud.appwrite.io)
+   - Create a new project
+   - Create a new API key with all permissions
+   - Create the following collections in your database:
+     - Workspaces
+     - Members
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Configure environment variables:
+   - Copy `env.local.example` to `.env.local`
+   - Update the following variables:
 
-## Learn More
+```bash
+# App URL
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 
-To learn more about Next.js, take a look at the following resources:
+# Appwrite Configuration
+NEXT_APPWRITE_KEY=your_appwrite_api_key_here
+NEXT_PUBLIC_APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
+NEXT_PUBLIC_APPWRITE_PROJECT=your_project_id_here
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Appwrite Database Configuration
+NEXT_PUBLIC_APPWRITE_DATABASE_ID=your_database_id_here
+NEXT_PUBLIC_APPWRITE_WORKSPACES_ID=your_workspaces_collection_id_here
+NEXT_PUBLIC_APPWRITE_MEMBERS_ID=your_members_collection_id_here
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Appwrite Storage Configuration
+NEXT_PUBLIC_APPWRITE_BUCKET_ID=your_bucket_id_here
+```
 
-## Deploy on Vercel
+5. Run the development server:
+```bash
+npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+6. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Appwrite Setup Guide
+
+1. Create Collections:
+   - Create a new database
+   - Create collections for:
+     - Workspaces
+     - Members
+     - Projects
+     - Tasks
+
+2. Configure Collection Permissions:
+   - Enable read/write access for authenticated users
+   - Set up appropriate indexes for queries
+
+3. Create Storage Bucket:
+   - Create a new storage bucket for file uploads
+   - Configure CORS and file size limits
+   - Set appropriate permissions
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
