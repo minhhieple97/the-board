@@ -7,18 +7,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { RiAddCircleLine } from "react-icons/ri";
-import { useGetWorkspaces } from "../api/useGetWorkSpaces";
 import { WorkSpaceAvatar } from "./WorkSpaceAvatar";
+import { useWorkspaceSelection } from "../hooks/useWorkspaceSelection";
 
 export const WorkSpaceSwitcher = () => {
-  const { data: workspaces } = useGetWorkspaces();
+  const { workspaces, selectedWorkspaceId, handleWorkspaceChange } =
+    useWorkspaceSelection();
   return (
     <div className="flex flex-col gap-y-2">
       <div className="flex items-center justify-between">
         <p className="text-xs uppercase text-neutral-500">Workspaces</p>
         <RiAddCircleLine size="5" className="cursor-pointer text-neutral-500" />
       </div>
-      <Select>
+      <Select value={selectedWorkspaceId} onValueChange={handleWorkspaceChange}>
         <SelectTrigger className="w-full bg-neutral-200 p-1 font-medium">
           <SelectValue
             placeholder={

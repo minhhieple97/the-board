@@ -5,6 +5,7 @@ import { ID, AppwriteException, Query } from "node-appwrite";
 import { sessionMiddleware } from "@/lib/server/session-middleware";
 import { config } from "@/config/env";
 import { MEMBER_TYPES } from "@/constants";
+import { generateRandomString } from "@/lib/utils";
 
 const app = new Hono()
   .post(
@@ -39,6 +40,7 @@ const app = new Hono()
             name,
             userId: user.$id,
             imageUrl: uploadedImageUrl,
+            inviteCode: generateRandomString(8),
           },
         );
 
