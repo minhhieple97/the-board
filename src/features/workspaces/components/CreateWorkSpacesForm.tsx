@@ -23,7 +23,7 @@ import { useCreateWorkSpacesForm } from "../hooks/useCreateWorkSpacesForm";
 import { ImageUpload } from "@/components/custom/image-upload/ImageUpload";
 
 type CreateWorkSpacesFormProps = {
-  onCancel: () => void;
+  onCancel?: () => void;
 };
 export const CreateWorkSpacesForm = ({
   onCancel,

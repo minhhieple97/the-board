@@ -3,6 +3,8 @@ import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import QueryProvider from "@/components/custom/QueryProvider";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "The Board",
@@ -17,10 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} "antialiased min-h-screen"`}>
-        <QueryProvider>
-          <Toaster />
-          {children}
-        </QueryProvider>
+        <NuqsAdapter>
+          <QueryProvider>
+            <Toaster />
+            {children}
+          </QueryProvider>
+        </NuqsAdapter>
       </body>
     </html>
   );

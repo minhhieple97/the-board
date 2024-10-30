@@ -1,1 +1,1 @@
-export * from "./MobileSidebar";
+export * from "./MobileSideBar";

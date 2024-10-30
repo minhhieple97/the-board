@@ -55,7 +55,7 @@ const app = new Hono()
           },
         );
 
-        return c.json({ success: true, data: workspace });
+        return c.json({ data: workspace });
       } catch (error) {
         if (error instanceof AppwriteException) {
           console.error("Workspace creation error:", error.message);
